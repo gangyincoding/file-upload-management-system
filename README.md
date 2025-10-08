@@ -72,7 +72,7 @@ file-upload-management-system/
 
 1. **克隆项目**
    ```bash
-   git clone https://github.com/your-username/file-upload-management-system.git
+   git clone https://github.com/gangyincoding/file-upload-management-system.git
    cd file-upload-management-system
    ```
 
@@ -152,15 +152,15 @@ file-upload-management-system/
 
 ## 👥 作者
 
-- **您的名字** - *初始开发* - [YourUsername](https://github.com/YourUsername)
+- **您的名字** - *初始开发* - [gangyincoding](https://github.com/gangyincoding)
 
 ## 📞 支持
 
 如果您有任何问题或建议，请通过以下方式联系：
 
-- 📧 邮箱：your.email@example.com
-- 🐛 问题反馈：[GitHub Issues](https://github.com/your-username/file-upload-management-system/issues)
-- 💬 讨论：[GitHub Discussions](https://github.com/your-username/file-upload-management-system/discussions)
+- 📧 邮箱：gangyincoding@163.com
+- 🐛 问题反馈：[GitHub Issues](https://github.com/gangyincoding/file-upload-management-system/issues)
+- 💬 讨论：[GitHub Discussions](https://github.com/gangyincoding/file-upload-management-system/discussions)
 
 ---
 
