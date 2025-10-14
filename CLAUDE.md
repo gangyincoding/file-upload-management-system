@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-这是一个基于Vue.js（前端）和Nest.js（后端）构建的Monorepo企业文件管理系统，支持多用户协作和基于角色的权限控制。系统目前处于规划阶段，拥有完善的文档但尚未开始代码实现。
+这是一个基于Vue.js（前端）和Nest.js（后端）构建的Monorepo企业文件管理系统，支持多用户协作和基于角色的权限控制。系统目前处于第一阶段开发中，前端基础架构已完成，后端待初始化。
 
 ## 架构设计
 
@@ -56,12 +56,11 @@ npm i -D @nestjs/cli @nestjs/testing @types/node typescript
 ### 前端开发命令
 ```bash
 cd frontend
-npm run dev          # 启动开发服务器
-npm run build        # 构建生产版本
+npm run dev          # 启动开发服务器 (http://localhost:3000)
+npm run build        # 构建生产版本 (TypeScript编译 + Vite构建)
 npm run preview      # 预览生产构建
-npm run lint         # 代码检查
-npm run format       # 代码格式化
-npm run test         # 运行测试
+npm run lint         # ESLint代码检查并自动修复
+npm run format       # Prettier代码格式化
 ```
 
 ### 后端开发命令
@@ -104,12 +103,21 @@ git push origin feature/功能名称
 
 ## 项目状态
 
-**当前阶段**: 规划/文档阶段
+**当前阶段**: 第一阶段开发中
 - ✅ 需求分析完成
 - ✅ 技术设计完成
-- ⏳ 前端项目初始化
-- ⏳ 后端项目初始化
+- ✅ 前端项目初始化（Vue3 + TypeScript + Element Plus + TailwindCSS）
+- ✅ 前端基础目录结构搭建（src/components, views, services等）
+- ⏳ 后端项目初始化（Nest.js项目尚未开始）
 - ⏳ Docker环境搭建
+- ⏳ 核心功能开发
+
+**前端当前状态**:
+- Vue3 + Vite + TypeScript 环境已配置
+- Element Plus UI框架已集成
+- TailwindCSS样式框架已配置
+- 基础路由和状态管理结构已搭建
+- 项目目录结构已建立
 
 ## 重要注意事项
 
@@ -118,6 +126,39 @@ git push origin feature/功能名称
 - 确保响应式设计在PC和移动设备上都能正常工作
 - 使用MongoDB存储元数据，MinIO存储文件
 - 所有文件操作都应记录日志用于审计
+
+## 前端开发规范
+
+### 代码规范
+- 使用 Composition API 编写Vue组件
+- 遵循 TypeScript 严格模式开发
+- 使用 Element Plus 作为UI组件库
+- 响应式设计优先，确保移动端体验
+- 代码提交前必须运行 `npm run lint` 检查
+
+### 当前可用的前端组件结构
+```
+frontend/src/
+├── assets/           # 静态资源文件
+├── components/       # 可复用Vue组件
+├── router/           # Vue Router路由配置
+├── services/         # API服务层（Axios配置）
+├── stores/           # Pinia状态管理
+├── types/            # TypeScript类型定义
+├── utils/            # 工具函数
+├── views/            # 页面级组件
+│   ├── auth/         # 认证相关页面
+│   ├── files/        # 文件管理页面
+│   └── user/         # 用户相关页面
+├── App.vue           # 应用根组件
+└── main.ts           # 应用入口文件
+```
+
+### 样式规范
+- 使用 TailwindCSS 实现响应式设计
+- 设计断点：sm(640px), md(768px), lg(1024px), xl(1280px)
+- 移动优先设计原则
+- 使用 Element Plus 主题变量保持设计一致性
 
 ## 核心架构说明
 
@@ -157,11 +198,11 @@ git push origin feature/功能名称
 
 #### 前端开发具体任务
 **第1-3天：项目基础搭建**
-- [ ] 创建Vue3项目并配置基础依赖
-- [ ] 配置Vite构建工具和TypeScript
-- [ ] 集成Element Plus UI框架
-- [ ] 配置TailwindCSS响应式框架
-- [ ] 设置项目目录结构（src/components, views, services等）
+- [x] 创建Vue3项目并配置基础依赖
+- [x] 配置Vite构建工具和TypeScript
+- [x] 集成Element Plus UI框架
+- [x] 配置TailwindCSS响应式框架
+- [x] 设置项目目录结构（src/components, views, services等）
 
 **第4-7天：认证系统开发**
 - [ ] 创建登录页面（手机号+密码）
