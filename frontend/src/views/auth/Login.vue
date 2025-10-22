@@ -56,13 +56,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const loginFormRef = ref<FormInstance>()
-const loading = ref(false)
 
 const loginForm = reactive({
   phoneNumber: '',
@@ -87,25 +88,27 @@ const handleLogin = async () => {
     const valid = await loginFormRef.value.validate()
     if (!valid) return
 
-    loading.value = true
+    const result = await authStore.login(loginForm)
 
-    // TODO: 实现登录API调用
-    console.log('登录表单数据:', loginForm)
-
-    // 模拟登录成功
-    setTimeout(() => {
-      ElMessage.success('登录成功')
-      localStorage.setItem('token', 'mock-token')
+    if (result.success) {
+      ElMessage.success(result.message)
       router.push('/files')
-      loading.value = false
-    }, 1000)
+    } else {
+      ElMessage.error(result.message)
+    }
 
   } catch (error) {
     console.error('登录失败:', error)
-    ElMessage.error('登录失败，请检查用户名和密码')
-    loading.value = false
+    ElMessage.error('登录失败，请稍后重试')
   }
 }
+
+// 如果已经登录，重定向到首页
+onMounted(() => {
+  if (authStore.isAuthenticated) {
+    router.push('/files')
+  }
+})
 </script>
 
 <style scoped>

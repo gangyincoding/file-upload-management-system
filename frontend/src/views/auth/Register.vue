@@ -78,13 +78,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const registerFormRef = ref<FormInstance>()
-const loading = ref(false)
 
 const registerForm = reactive({
   phoneNumber: '',
@@ -127,24 +128,28 @@ const handleRegister = async () => {
     const valid = await registerFormRef.value.validate()
     if (!valid) return
 
-    loading.value = true
+    const { confirmPassword, ...registerData } = registerForm
+    const result = await authStore.register(registerData)
 
-    // TODO: 实现注册API调用
-    console.log('注册表单数据:', registerForm)
-
-    // 模拟注册成功
-    setTimeout(() => {
-      ElMessage.success('注册成功，请登录')
-      router.push('/login')
-      loading.value = false
-    }, 1000)
+    if (result.success) {
+      ElMessage.success(result.message)
+      router.push('/files')
+    } else {
+      ElMessage.error(result.message)
+    }
 
   } catch (error) {
     console.error('注册失败:', error)
-    ElMessage.error('注册失败，请重试')
-    loading.value = false
+    ElMessage.error('注册失败，请稍后重试')
   }
 }
+
+// 如果已经登录，重定向到首页
+onMounted(() => {
+  if (authStore.isAuthenticated) {
+    router.push('/files')
+  }
+})
 </script>
 
 <style scoped>

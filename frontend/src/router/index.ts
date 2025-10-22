@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -12,13 +13,13 @@ const routes: RouteRecordRaw[] = [
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/Login.vue'),
-    meta: { title: '登录' }
+    meta: { title: '登录', requiresGuest: true }
   },
   {
     path: '/register',
     name: 'Register',
     component: () => import('@/views/auth/Register.vue'),
-    meta: { title: '注册' }
+    meta: { title: '注册', requiresGuest: true }
   },
   {
     path: '/files',
@@ -40,17 +41,29 @@ const router = createRouter({
 })
 
 // 路由守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // 设置页面标题
   document.title = `${to.meta.title} - 文件管理系统`
 
+  const authStore = useAuthStore()
+
+  // 初始化认证状态
+  if (!authStore.isAuthenticated) {
+    authStore.initAuth()
+  }
+
   // 检查是否需要认证
   if (to.meta.requiresAuth) {
-    const token = localStorage.getItem('token')
-    if (!token) {
+    if (!authStore.isAuthenticated) {
       next('/login')
       return
     }
+  }
+
+  // 如果已登录，访问游客页面则重定向到首页
+  if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    next('/files')
+    return
   }
 
   next()

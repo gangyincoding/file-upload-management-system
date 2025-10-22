@@ -2,9 +2,36 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(yarn:*)",
+      "Bash(npm i:*)",
+      "Bash(npm run dev)",
+      "Bash(npm run start:dev:*)",
+      "Bash(curl:*)",
+      "Bash(mongosh:*)",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGY3YTEyNmEwNTI4ZjUzNGZiNTVjOTkiLCJwaG9uZU51bWJlciI6IjEzODg4ODg4ODg4IiwidXNlcm5hbWUiOiLvv73vv73vv73vv70iLCJyb2xlIjoidXNlciIsImlhdCI6MTc2MTA1OTI0NCwiZXhwIjoxNzYxNjY0MDQ0fQ.UvSyQl-C29xU4uTGj1rci1MGpSlnBzpzYDY6SEcOsWY\")",
+      "Bash(npm run dev:*)",
+      "Bash(docker-compose:*)",
+      "Bash(node:*)",
+      "Bash(npm --version)",
+      "Bash(docker:*)"
     ],
     "deny": [],
     "ask": []
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit/MultiEdit/Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx prettier --check ."
+          }
+        ]
+      }
+    ]
   }
 }
